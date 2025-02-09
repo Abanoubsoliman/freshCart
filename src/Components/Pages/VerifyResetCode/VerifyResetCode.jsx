@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "Yup";
+import * as yup from "yup";
 import { Bounce, toast } from "react-toastify";
 
 export default function VerifyResetCode() {
@@ -57,8 +57,8 @@ export default function VerifyResetCode() {
     }
   };
 
-  const validationSchema = Yup.object({
-    resetCode: Yup.string().required("Email is required"),
+  const validationSchema = yup.object({
+    resetCode: yup.string().required("Email is required"),
   });
 
   const {

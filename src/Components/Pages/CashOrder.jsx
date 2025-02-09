@@ -4,21 +4,21 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
-import * as Yup from "Yup";
+import * as yup from "yup";
 
 export default function CashOrder() {
   const navigate = useNavigate();
   const { cartId } = useParams();
   const [isLoading, setIsLoading] = useState(false);
 
-  const validationSchema = Yup.object({
-    details: Yup.string()
+  const validationSchema = yup.object({
+    details: yup.string()
       .required("Address details are required")
       .min(10, "Address must be at least 10 characters"),
-    city: Yup.string()
+    city: yup.string()
       .required("City is required")
       .matches(/^[A-Za-z ]+$/, "City must contain only letters"),
-    phone: Yup.string()
+    phone: yup.string()
       .required("Phone number is required")
       .matches(/^01[0125][0-9]{8}$/, "Egyptian phone number is required"),
   });

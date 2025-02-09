@@ -2,7 +2,7 @@ import { Button, Input } from "@heroui/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import { useParams } from "react-router-dom";
-import * as yup from "Yup";
+import * as yup from "yup";
 import { toast } from "react-toastify";
 
 export default function Address() {

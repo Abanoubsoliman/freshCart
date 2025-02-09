@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import * as Yup from "Yup";
+import * as yup from "yup";
 import { Bounce, toast } from "react-toastify";
 import { EyeFilledIcon } from "../../../Services/AuthIcons/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../../../Services/AuthIcons/EyeSlashFilledIcon";
@@ -63,10 +63,10 @@ export default function ResetPassword() {
     }
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string().required("Email is required"),
+  const validationSchema = yup.object({
+    email: yup.string().required("Email is required"),
 
-    newPassword: Yup.string()
+    newPassword: yup.string()
       .required("New password is required")
       .min(6, "Must be at least 6 characters")
       .max(20, "Cannot exceed 20 characters")
@@ -74,9 +74,9 @@ export default function ResetPassword() {
         /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/,
         "Password must contain at least one letter and one number"
       ),
-      confirmPassword: Yup.string()
+      confirmPassword: yup.string()
       .required("Confirm password is required")
-      .oneOf([Yup.ref('newPassword')], "Passwords do not match"),
+      .oneOf([yup.ref('newPassword')], "Passwords do not match"),
 
   });
 
