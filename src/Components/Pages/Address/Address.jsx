@@ -10,22 +10,25 @@ export default function Address() {
 
   // Enhanced validation schema
   const validationSchema = yup.object({
-    details: yup.string()
+    details: yup
+      .string()
       .required("Address details are required")
       .min(10, "Address must be at least 10 characters"),
-    city: yup.string()
+    city: yup
+      .string()
       .required("City is required")
       .matches(/^[A-Za-z\s]+$/, "City must contain only letters"),
-    phone: yup.string()
+    phone: yup
+      .string()
       .required("Phone number is required")
-      .matches(/^01[0125]\d{8}$/, "Valid Egyptian phone number required")
+      .matches(/^01[0125]\d{8}$/, "Valid Egyptian phone number required"),
   });
 
   const formik = useFormik({
     initialValues: {
       details: "",
       phone: "",
-      city: ""
+      city: "",
     },
     validationSchema,
     onSubmit: async (values, { setSubmitting }) => {
@@ -35,11 +38,11 @@ export default function Address() {
           { shippingAddress: values },
           {
             headers: {
-              token: localStorage.getItem("token")
+              token: localStorage.getItem("token"),
             },
             params: {
-              url: "https://fresh-cart-swart-five.vercel.app" // Use current origin instead of hardcoding
-            }
+              url: "http://localhost:5173",
+            },
           }
         );
 
@@ -60,7 +63,7 @@ export default function Address() {
       } finally {
         setSubmitting(false);
       }
-    }
+    },
   });
 
   return (
