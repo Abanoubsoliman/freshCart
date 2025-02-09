@@ -1,7 +1,7 @@
 import { Button, Input } from "@heroui/react";
 import axios from "axios";
 import { useFormik } from "formik";
-import * as yup from "Yup"; 
+import * as yup from "yup"; 
 import { Bounce, toast } from "react-toastify";
 import { useMutation } from "@tanstack/react-query";
 import { EyeSlashFilledIcon } from "../../../Services/AuthIcons/EyeSlashFilledIcon";

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "Yup"; 
+import * as yup from "yup"; 
 import { EyeSlashFilledIcon } from "../../../Services/AuthIcons/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "../../../Services/AuthIcons/EyeFilledIcon";
 import { toast } from "react-toastify";
@@ -18,26 +18,26 @@ export default function Register() {
   });
 
   const initialValues = {
-    name: "abanoub",
-    email: "abanoub@gmail.com",
-    password: "123456a",
-    rePassword: "123456a",
-    phone: "01010700999",
+    name: "",
+    email: "",
+    password: "",
+    rePassword: "",
+    phone: "",
   };
 
-  const validationSchema = Yup.object({
-    name: Yup.string()
+  const validationSchema = yup.object({
+    name: yup.string()
       .required("Name is required")
       .min(3, "Name must be at least 3 characters")
       .max(20, "Name must not exceed 20 characters"),
-    email: Yup.string()
+    email: yup.string()
       .email("Invalid email address")
       .required("Email is required")
       .matches(
         /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
         "Invalid email format"
       ),
-    password: Yup.string()
+    password: yup.string()
       .required("Password is required")
       .min(6, "Password must be at least 6 characters")
       .max(20, "Password must not exceed 20 characters")
@@ -45,10 +45,10 @@ export default function Register() {
         /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,}$/,
         "Must contain at least one letter and number"
       ),
-    rePassword: Yup.string()
+    rePassword: yup.string()
       .required("Confirm Password is required")
-      .oneOf([Yup.ref("password")], "Passwords must match"),
-    phone: Yup.string()
+      .oneOf([yup.ref("password")], "Passwords must match"),
+    phone: yup.string()
       .required("Phone number is required")
       .matches(/^01[0125][0-9]{8}$/, "Invalid Egyptian phone number")
   });

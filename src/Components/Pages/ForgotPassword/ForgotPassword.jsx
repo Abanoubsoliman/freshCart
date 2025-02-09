@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "Yup";
+import * as yup from "yup";
 import { Bounce, toast } from "react-toastify";
 
 export default function ForgotPassword() {
@@ -59,8 +59,8 @@ export default function ForgotPassword() {
     }
   };
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
+  const validationSchema = yup.object({
+    email: yup.string()
       .required("Email is required")
       .email("Invalid email address"),
   });

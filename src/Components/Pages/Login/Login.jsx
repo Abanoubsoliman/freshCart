@@ -3,7 +3,7 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useContext, useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import * as Yup from "Yup";
+import * as yup from "yup";
 import { authContext } from "../../../Contexts/AuthContext";
 import { toast } from "react-toastify";
 import { EyeFilledIcon } from "../../../Services/AuthIcons/EyeFilledIcon";
@@ -17,12 +17,12 @@ export default function Login() {
   const [errMsg, setErrMsg] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
-  const validationSchema = Yup.object({
-    email: Yup.string()
+  const validationSchema = yup.object({
+    email: yup.string()
       .email("Invalid email address")
       .required("Email is required")
       .max(50, "Maximum 50 characters"),
-    password: Yup.string()
+    password: yup.string()
       .required("Password is required")
       .min(6, "Minimum 6 characters")
       .max(20, "Maximum 20 characters")
@@ -34,8 +34,8 @@ export default function Login() {
 
   const formik = useFormik({
     initialValues: {
-      email: "bebo.bob195@gmail.com",
-      password: "123456q",
+      email: "",
+      password: "",
     },
     validationSchema,
     onSubmit: async (values) => {
