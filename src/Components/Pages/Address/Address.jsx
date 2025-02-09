@@ -38,7 +38,7 @@ export default function Address() {
               token: localStorage.getItem("token")
             },
             params: {
-              url: window.location.origin // Use current origin instead of hardcoding
+              url: "https://fresh-cart-swart-five.vercel.app" // Use current origin instead of hardcoding
             }
           }
         );
