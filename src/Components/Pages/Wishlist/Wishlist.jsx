@@ -16,13 +16,13 @@ const Wishlist = () => {
   const [error, setError] = useState(null);
   const [processingIds, setProcessingIds] = useState(new Set());
 
-  const  fetchWishlist = async () => {
+  const fetchWishlist = async () => {
     try {
       const { data } = await axios.get(
         "https://ecommerce.routemisr.com/api/v1/wishlist",
         { headers: { token: localStorage.getItem("token") } }
       );
-  
+
       setWishlist(data.data);
     } catch (err) {
       setError(err.response?.data?.message || "Error fetching wishlist");
@@ -31,36 +31,38 @@ const Wishlist = () => {
     }
   };
 
-
   const handleRemoveItem = async (productId) => {
     try {
-      setProcessingIds(prev => new Set([...prev, productId]));
-      
-    
+      setProcessingIds((prev) => new Set([...prev, productId]));
+
       await axios.delete(
         `https://ecommerce.routemisr.com/api/v1/wishlist/${productId}`,
-        { headers: { token: localStorage.getItem('token') } }
+        { headers: { token: localStorage.getItem("token") } }
       );
-  
-      
-      setWishlist(prev => 
-        prev.filter(item => 
-          item.product?._id !== productId && item._id !== productId
+
+      setWishlist((prev) =>
+        prev.filter(
+          (item) => item.product?._id !== productId && item._id !== productId
         )
       );
-  
-      toast.success(<div className="flex items-center gap-2"><FaHeartBroken /> Removed from wishlist</div>);
+
+      toast.success(
+        <div className="flex items-center gap-2">
+          <FaHeartBroken /> Removed from wishlist
+        </div>
+      );
     } catch (err) {
-      toast.error(err.response?.data?.message || "Error removing from wishlist");
+      toast.error(
+        err.response?.data?.message || "Error removing from wishlist"
+      );
     } finally {
-      setProcessingIds(prev => {
+      setProcessingIds((prev) => {
         const next = new Set(prev);
         next.delete(productId);
         return next;
       });
     }
   };
-  
 
   const handleAddToCart = async (productId) => {
     try {
@@ -130,69 +132,65 @@ const Wishlist = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {wishlist.map((item) => {
-             const productId = item.product?._id || item._id;
-             const imageUrl = item.product?.imageCover || item.imageCover;
-             return (
+            const productId = item.product?._id || item._id;
+            const imageUrl = item.product?.imageCover || item.imageCover;
+            return (
+              <div
+                key={productId}
+                className="border rounded-xl p-4 bg-white shadow-lg hover:shadow-xl transition-all duration-300 group"
+              >
+                <Link to={`/product%20/` + item._id}>
+                  <div className="relative overflow-hidden rounded-lg">
+                    <img
+                      src={imageUrl}
+                      alt={item.title}
+                      className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+                  </div>
+                </Link>
 
-            <div
-              key={productId}
-              className="border rounded-xl p-4 bg-white shadow-lg hover:shadow-xl transition-all duration-300 group"
-            >
-              <Link to={/product/ + item._id}>
-                <div className="relative overflow-hidden rounded-lg">
-                  <img
-                    src={imageUrl}
-                    alt={item.title}
-                    className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                </div>
-              </Link>
-
-              <div className="mt-4">
-                <h3 className="text-lg font-bold text-gray-800 truncate">
-                  {item.title}
-                </h3>
-                <div className="flex justify-between items-center mt-4">
-                  <span className="text-xl font-semibold text-purple-600">
-                    EGP {item.price}
-                  </span>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => handleAddToCart(productId)}
-                      disabled={processingIds.has(productId)}
-                      className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
-                    >
-                      {processingIds.has(productId) ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <FaShoppingCart />
-                      )}
-                      Cart
-                    </button>
-                    <button
-                      onClick={() => handleRemoveItem(productId)}
-                      disabled={processingIds.has(productId)}
-                      className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
-                    >
-                      {processingIds.has(productId) ? (
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      ) : (
-                        <FaTrash />
-                      )}
-                    </button>
+                <div className="mt-4">
+                  <h3 className="text-lg font-bold text-gray-800 truncate">
+                    {item.title}
+                  </h3>
+                  <div className="flex justify-between items-center mt-4">
+                    <span className="text-xl font-semibold text-purple-600">
+                      EGP {item.price}
+                    </span>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => handleAddToCart(productId)}
+                        disabled={processingIds.has(productId)}
+                        className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+                      >
+                        {processingIds.has(productId) ? (
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <FaShoppingCart />
+                        )}
+                        Cart
+                      </button>
+                      <button
+                        onClick={() => handleRemoveItem(productId)}
+                        disabled={processingIds.has(productId)}
+                        className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all flex items-center gap-2"
+                      >
+                        {processingIds.has(productId) ? (
+                          <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        ) : (
+                          <FaTrash />
+                        )}
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
+            );
           })}
         </div>
       )}
     </div>
-
-    
-
   );
 };
 export default Wishlist;
