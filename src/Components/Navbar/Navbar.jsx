@@ -69,6 +69,7 @@ export default function Navbar() {
 
   return (
     <HeroUINavbar
+    isMenuOpen={isMenuOpen}
       shouldHideOnScroll
       onMenuOpenChange={setIsMenuOpen}
       className="bg-white/80 backdrop-blur-sm border-b border-gray-100 shadow-sm"
@@ -100,6 +101,7 @@ export default function Navbar() {
                 className={({ isActive }) =>
                   `flex items-center gap-2 text-gray-600 hover:text-green-600 transition-colors
                   ${isActive ? "!text-green-600 font-medium" : ""}`
+                  
                 }
               >
                 {item.icon}
@@ -227,6 +229,7 @@ export default function Navbar() {
               <Link
                 to={item.path}
                 className="flex items-center gap-3 px-4 py-3 rounded-xl hover:bg-gray-50"
+                onClick={() => setIsMenuOpen(false)}
               >
                 {item.icon}
                 <span className="text-sm">{item.name}</span>

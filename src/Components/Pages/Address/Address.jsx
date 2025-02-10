@@ -41,7 +41,7 @@ export default function Address() {
               token: localStorage.getItem("token"),
             },
             params: {
-              url: "http://localhost:5173",
+              url: "fresh-cart-swart-five.vercel.app",
             },
           }
         );
